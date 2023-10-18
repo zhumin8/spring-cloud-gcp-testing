@@ -1,0 +1,8 @@
+[
+{
+  "name":"com.google.cloud.datastore.Key"
+},
+{
+  "name":"com.google.cloud.datastore.Key",
+  "queryAllDeclaredConstructors":true
+}]

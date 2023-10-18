@@ -20,10 +20,12 @@ import com.google.cloud.datastore.Datastore;
 import com.google.cloud.datastore.IncompleteKey;
 import com.google.cloud.datastore.Key;
 import com.google.cloud.datastore.KeyFactory;
+import com.google.cloud.spring.data.datastore.aot.DatastoreMappingRuntimeHints;
 import com.google.cloud.spring.data.datastore.core.DatastoreTemplate;
 import com.google.cloud.spring.data.datastore.core.mapping.DatastoreDataException;
 import com.google.cloud.spring.data.datastore.core.mapping.DatastorePersistentEntity;
 import java.util.function.Supplier;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.data.mapping.PersistentProperty;
 import org.springframework.util.Assert;
 
@@ -33,6 +35,7 @@ import org.springframework.util.Assert;
  *
  * @since 1.1
  */
+@ImportRuntimeHints(DatastoreMappingRuntimeHints.class)
 public class DatastoreServiceObjectToKeyFactory implements ObjectToKeyFactory {
 
   private final Supplier<Datastore> datastore;

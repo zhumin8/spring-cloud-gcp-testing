@@ -43,6 +43,7 @@ import com.google.cloud.datastore.StructuredQuery.Filter;
 import com.google.cloud.datastore.StructuredQuery.PropertyFilter;
 import com.google.cloud.datastore.Value;
 import com.google.cloud.datastore.aggregation.Aggregation;
+import com.google.cloud.spring.data.datastore.aot.DatastoreRepositoryRuntimeHints;
 import com.google.cloud.spring.data.datastore.core.convert.DatastoreEntityConverter;
 import com.google.cloud.spring.data.datastore.core.convert.ObjectToKeyFactory;
 import com.google.cloud.spring.data.datastore.core.mapping.DatastoreDataException;
@@ -77,9 +78,12 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.NullHandler;
@@ -102,8 +106,9 @@ import org.springframework.util.TypeUtils;
  *
  * @since 1.1
  */
+@ImportRuntimeHints(DatastoreRepositoryRuntimeHints.class)
 public class DatastoreTemplate implements DatastoreOperations, ApplicationEventPublisherAware {
-
+  private static final Log LOGGER = LogFactory.getLog(DatastoreTemplate.class);
   private int maxWriteSize = 500;
 
   private final Supplier<? extends DatastoreReaderWriter> datastore;

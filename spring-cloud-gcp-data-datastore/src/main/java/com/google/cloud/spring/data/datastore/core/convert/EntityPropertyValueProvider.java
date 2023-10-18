@@ -17,9 +17,11 @@
 package com.google.cloud.spring.data.datastore.core.convert;
 
 import com.google.cloud.datastore.BaseEntity;
+import com.google.cloud.spring.data.datastore.aot.DatastoreMappingRuntimeHints;
 import com.google.cloud.spring.data.datastore.core.mapping.DatastoreDataException;
 import com.google.cloud.spring.data.datastore.core.mapping.DatastorePersistentProperty;
 import com.google.cloud.spring.data.datastore.core.mapping.EmbeddedType;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.core.convert.ConversionException;
 import org.springframework.data.mapping.model.PropertyValueProvider;
 import org.springframework.data.util.TypeInformation;
@@ -29,6 +31,7 @@ import org.springframework.data.util.TypeInformation;
  *
  * @since 1.1
  */
+@ImportRuntimeHints(DatastoreMappingRuntimeHints.class)
 public class EntityPropertyValueProvider
     implements PropertyValueProvider<DatastorePersistentProperty> {
   private final BaseEntity entity;

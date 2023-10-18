@@ -23,7 +23,7 @@ import org.springframework.data.annotation.Id;
 
 @Entity(name = "company")
 public class Company {
-  @Id public Long id;
+  @Id private Long id;
 
   @Descendants public List<Employee> leaders;
 

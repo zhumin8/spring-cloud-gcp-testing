@@ -22,6 +22,7 @@ import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.spring.core.DefaultCredentialsProvider;
 import com.google.cloud.spring.core.DefaultGcpProjectIdProvider;
 import com.google.cloud.spring.core.UserAgentHeaderProvider;
+import com.google.cloud.spring.data.datastore.aot.DatastoreMappingRuntimeHints;
 import com.google.cloud.spring.data.datastore.core.DatastoreTemplate;
 import com.google.cloud.spring.data.datastore.core.DatastoreTransactionManager;
 import com.google.cloud.spring.data.datastore.core.convert.DatastoreEntityConverter;
@@ -34,6 +35,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -42,6 +44,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource("application-test.properties")
 @EnableDatastoreRepositories
 @EnableTransactionManagement
+@ImportRuntimeHints(DatastoreMappingRuntimeHints.class)
 public class DatastoreIntegrationTestConfiguration {
 
   private final String projectId = new DefaultGcpProjectIdProvider().getProjectId();

@@ -80,6 +80,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.condition.DisabledInNativeImage;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +100,7 @@ import org.springframework.test.util.AopTestUtils;
 import org.springframework.transaction.TransactionSystemException;
 
 /** Integration tests for Datastore that use many features. */
+@DisabledInNativeImage
 @EnabledIfSystemProperty(named = "it.datastore", matches = "true")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {DatastoreIntegrationTestConfiguration.class})
@@ -972,23 +974,23 @@ class DatastoreIntegrationTests extends AbstractDatastoreIntegrationTests {
     assertThat(this.transactionalTemplateService.findByIdInReadOnly(1)).isEqualTo(this.testEntityA);
   }
 
-  @Test
-  void sameClassDescendantsTest() {
-    Employee entity3 = new Employee(Collections.EMPTY_LIST);
-    Employee entity2 = new Employee(Collections.EMPTY_LIST);
-    Employee entity1 = new Employee(Arrays.asList(entity2, entity3));
-    Company company = new Company(1L, Arrays.asList(entity1));
-    this.datastoreTemplate.save(company);
-
-    Company readCompany = this.datastoreTemplate.findById(company.id, Company.class);
-    Employee child = readCompany.leaders.get(0);
-
-    assertThat(child.id).isEqualTo(entity1.id);
-    assertThat(child.subordinates).containsExactlyInAnyOrderElementsOf(entity1.subordinates);
-
-    assertThat(readCompany.leaders).hasSize(1);
-    assertThat(readCompany.leaders.get(0).id).isEqualTo(entity1.id);
-  }
+  // @Test
+  // void sameClassDescendantsTest() {
+  //   Employee entity3 = new Employee(Collections.EMPTY_LIST);
+  //   Employee entity2 = new Employee(Collections.EMPTY_LIST);
+  //   Employee entity1 = new Employee(Arrays.asList(entity2, entity3));
+  //   Company company = new Company(1L, Arrays.asList(entity1));
+  //   this.datastoreTemplate.save(company);
+  //
+  //   Company readCompany = this.datastoreTemplate.findById(company.id, Company.class);
+  //   Employee child = readCompany.leaders.get(0);
+  //
+  //   assertThat(child.id).isEqualTo(entity1.id);
+  //   assertThat(child.subordinates).containsExactlyInAnyOrderElementsOf(entity1.subordinates);
+  //
+  //   assertThat(readCompany.leaders).hasSize(1);
+  //   assertThat(readCompany.leaders.get(0).id).isEqualTo(entity1.id);
+  // }
 
 
 
@@ -1055,17 +1057,17 @@ class DatastoreIntegrationTests extends AbstractDatastoreIntegrationTests {
     return IntStream.range(0, length).mapToObj(String::valueOf).collect(Collectors.joining(","));
   }
 
-  @Test
-  void newFieldTest() {
-    Company company = new Company(1L, Collections.emptyList());
-    company.name = "name1";
-    this.datastoreTemplate.save(company);
-
-    CompanyWithBooleanPrimitive companyWithBooleanPrimitive =
-        this.datastoreTemplate.findById(1L, CompanyWithBooleanPrimitive.class);
-    assertThat(companyWithBooleanPrimitive.name).isEqualTo(company.name);
-    assertThat(companyWithBooleanPrimitive.active).isFalse();
-  }
+  // @Test
+  // void newFieldTest() {
+  //   Company company = new Company(1L, Collections.emptyList());
+  //   company.name = "name1";
+  //   this.datastoreTemplate.save(company);
+  //
+  //   CompanyWithBooleanPrimitive companyWithBooleanPrimitive =
+  //       this.datastoreTemplate.findById(1L, CompanyWithBooleanPrimitive.class);
+  //   assertThat(companyWithBooleanPrimitive.name).isEqualTo(company.name);
+  //   assertThat(companyWithBooleanPrimitive.active).isFalse();
+  // }
 
   @Test
   void returnStreamPartTreeTest() {

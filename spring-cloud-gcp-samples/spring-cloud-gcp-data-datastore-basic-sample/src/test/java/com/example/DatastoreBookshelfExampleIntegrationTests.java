@@ -72,8 +72,21 @@ class DatastoreBookshelfExampleIntegrationTests {
   @AfterEach
   void cleanUp() {
     this.datastoreTemplate.deleteAll(Book.class);
+    this.datastoreTemplate.deleteAll(BookWithoutRepo.class);
   }
 
+  @Test
+  void baseTestTemplateSave() {
+    Book book = new Book("title","John Doe", 2022);
+    this.datastoreTemplate.save(book);
+    assertThat(this.datastoreTemplate.count(Book.class)).isEqualTo(5);
+  }
+  @Test
+  void testTemplateSaveNoRepo() {
+    BookWithoutRepo bookWithoutRepo = new BookWithoutRepo("title","John Doe", 2022);
+    this.datastoreTemplate.save(bookWithoutRepo);
+    assertThat(this.datastoreTemplate.count(BookWithoutRepo.class)).isEqualTo(1);
+  }
   @Test
   void testSerializedPage() {
     String responseBody = sendRequest("/allbooksserialized", null, HttpMethod.GET);

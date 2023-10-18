@@ -25,6 +25,7 @@ import com.google.cloud.datastore.IncompleteKey;
 import com.google.cloud.datastore.ListValue;
 import com.google.cloud.datastore.StringValue;
 import com.google.cloud.datastore.Value;
+import com.google.cloud.spring.data.datastore.aot.DatastoreMappingRuntimeHints;
 import com.google.cloud.spring.data.datastore.core.mapping.DatastoreDataException;
 import com.google.cloud.spring.data.datastore.core.mapping.DatastoreMappingContext;
 import com.google.cloud.spring.data.datastore.core.mapping.DatastorePersistentEntity;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.data.mapping.PersistentPropertyAccessor;
 import org.springframework.data.mapping.model.EntityInstantiator;
 import org.springframework.data.mapping.model.EntityInstantiators;
@@ -50,6 +52,7 @@ import org.springframework.util.Assert;
  *
  * @since 1.1
  */
+@ImportRuntimeHints({DatastoreMappingRuntimeHints.class})
 public class DefaultDatastoreEntityConverter implements DatastoreEntityConverter {
   private final DatastoreMappingContext mappingContext;
 

@@ -16,6 +16,8 @@
 
 package com.google.cloud.spring.data.datastore.core.mapping;
 
+import com.google.cloud.spring.data.datastore.aot.DatastoreMappingRuntimeHints;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.data.mapping.Association;
 import org.springframework.data.mapping.PersistentEntity;
 import org.springframework.data.mapping.model.AnnotationBasedPersistentProperty;
@@ -30,6 +32,7 @@ import org.springframework.util.StringUtils;
  *
  * @since 1.1
  */
+@ImportRuntimeHints(DatastoreMappingRuntimeHints.class)
 public class DatastorePersistentPropertyImpl
     extends AnnotationBasedPersistentProperty<DatastorePersistentProperty>
     implements DatastorePersistentProperty {

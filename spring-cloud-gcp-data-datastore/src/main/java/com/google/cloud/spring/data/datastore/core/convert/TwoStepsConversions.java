@@ -26,6 +26,7 @@ import com.google.cloud.datastore.FullEntity.Builder;
 import com.google.cloud.datastore.IncompleteKey;
 import com.google.cloud.datastore.ListValue;
 import com.google.cloud.datastore.Value;
+import com.google.cloud.spring.data.datastore.aot.DatastoreMappingRuntimeHints;
 import com.google.cloud.spring.data.datastore.core.mapping.DatastoreDataException;
 import com.google.cloud.spring.data.datastore.core.mapping.DatastoreMappingContext;
 import com.google.cloud.spring.data.datastore.core.mapping.DatastorePersistentProperty;
@@ -41,6 +42,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.StreamSupport;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.core.convert.ConversionException;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.support.DefaultConversionService;
@@ -59,6 +61,7 @@ import org.springframework.util.ClassUtils;
  *
  * @since 1.1
  */
+@ImportRuntimeHints(DatastoreMappingRuntimeHints.class)
 public class TwoStepsConversions implements ReadWriteConversions {
   private static final Converter<Blob, byte[]> BLOB_TO_BYTE_ARRAY_CONVERTER =
       new Converter<>() {

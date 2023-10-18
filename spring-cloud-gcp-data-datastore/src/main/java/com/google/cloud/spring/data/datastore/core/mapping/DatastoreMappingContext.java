@@ -16,6 +16,7 @@
 
 package com.google.cloud.spring.data.datastore.core.mapping;
 
+import com.google.cloud.spring.data.datastore.aot.DatastoreMappingRuntimeHints;
 import com.google.cloud.spring.data.datastore.core.convert.DatastoreNativeTypes;
 import java.util.HashSet;
 import java.util.Map;
@@ -23,6 +24,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.data.mapping.context.AbstractMappingContext;
 import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.mapping.model.FieldNamingStrategy;
@@ -37,6 +39,7 @@ import org.springframework.lang.NonNull;
  *
  * @since 1.1
  */
+@ImportRuntimeHints(DatastoreMappingRuntimeHints.class)
 public class DatastoreMappingContext
     extends AbstractMappingContext<DatastorePersistentEntity<?>, DatastorePersistentProperty>
     implements ApplicationContextAware {
@@ -111,7 +114,7 @@ public class DatastoreMappingContext
     if (this.applicationContext != null) {
       persistentEntity.setApplicationContext(this.applicationContext);
     }
-    return persistentEntity;
+    return persistentEntity; // at this point, idProperty = null
   }
 
   @Override
