@@ -71,10 +71,40 @@ while IFS=, read -r library_name googleapis_location coordinates_version googlea
   prepare_bazel_build $googleapis_commitish $googleapis_location 2>&1 | tee tmp-output || save_error_info ${SPRING_GENERATOR_DIR} "bazel_prepare_$library_name"
 done <<< "${LIBRARIES}"
 
+# add commit to debug branch in repo. This branch is wiped out each time.
+# This debug branch contains googleapis alterations before invoking bazel_build_all
+cd ${SPRING_GENERATOR_DIR}
+
+debug_branch="debug-spring-rules"
+remote="my-graal-test"
+
+# record the current branch
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+echo "Current branch working on: $current_branch"
+# Check if the branch exists on the remote
+branch_exists=$(git ls-remote --heads $remote $debug_branch)
+
+if [[ -n $branch_exists ]]; then
+  # Branch exists - proceed with deletion
+  echo "Branch '$debug_branch' found on remote '$remote'."
+  git push $remote --delete $debug_branch
+fi
+
+echo "creating $debug_branch branch, add commit and push to remote"
+git checkout -b $debug_branch ||  { echo "Error creating or switching to new branch. Exiting." && exit 1; }
+# remove .git so content can be added to commit for debug
+rm -rf googleapis/.git
+git add .
+git commit -m "debug: added all changes to repo before fetching all `*java_gapic_spring` build rules and build them."
+git push $remote $debug_branch
+
+echo "switch back to original branch again."
+git checkout $current_branch
+
 # Invoke all bazel build targets
 echo "invoking bazel_build_all"
 cd ${SPRING_GENERATOR_DIR}/googleapis
-bazel_build_all
+bazel_build_all ||  { echo "Error in bazel_build_all step. Exiting." && exit 1; }
 cd ${SPRING_GENERATOR_DIR}
 
 # For each of the entries in the library list, perform post-processing steps
