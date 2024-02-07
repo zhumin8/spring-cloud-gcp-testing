@@ -88,39 +88,43 @@ if [[ -n $branch_exists ]]; then
   # Branch exists - proceed with deletion
   echo "Branch '$debug_branch' found on remote '$remote'."
   git push $remote --delete $debug_branch
+  # cleanup local
+  git fetch --prune
 fi
 
 echo "creating $debug_branch branch, add commit and push to remote"
 git checkout -b $debug_branch ||  { echo "Error creating or switching to new branch. Exiting." && exit 1; }
 # remove .git so content can be added to commit for debug
+echo "remove googleapis/.git to avoid conflict"
 rm -rf googleapis/.git
 git add .
 git commit -m "debug: added all changes to repo before fetching all `*java_gapic_spring` build rules and build them."
+echo "commit added, now push to remote."
 git push $remote $debug_branch
 
-echo "switch back to original branch again."
-git checkout $current_branch
-
-# Invoke all bazel build targets
-echo "invoking bazel_build_all"
-cd ${SPRING_GENERATOR_DIR}/googleapis
-bazel_build_all ||  { echo "Error in bazel_build_all step. Exiting." && exit 1; }
-cd ${SPRING_GENERATOR_DIR}
-
-# For each of the entries in the library list, perform post-processing steps
-echo "looping over libraries to perform post-processing"
-while IFS=, read -r library_name googleapis_location coordinates_version googleapis_commitish monorepo_folder; do
-  echo "processing library $library_name"
-  group_id=$(echo $coordinates_version | cut -f1 -d:)
-  artifact_id=$(echo $coordinates_version | cut -f2 -d:)
-  postprocess_library $artifact_id $group_id $PROJECT_VERSION $googleapis_location $monorepo_folder $googleapis_commitish $MONOREPO_TAG 2>&1 | tee tmp-output || save_error_info ${SPRING_GENERATOR_DIR} "postprocess_$library_name"
-done <<< "${LIBRARIES}"
-
-# Clean up downloaded repo and output file
-rm tmp-output
-rm -rf googleapis
-
-# Format generated code
-echo "running formatter on generated code"
-run_formatter ${SPRING_ROOT_DIR}/spring-cloud-previews
-
+#echo "switch back to original branch again."
+#git checkout $current_branch
+#
+## Invoke all bazel build targets
+#echo "invoking bazel_build_all"
+#cd ${SPRING_GENERATOR_DIR}/googleapis
+#bazel_build_all ||  { echo "Error in bazel_build_all step. Exiting." && exit 1; }
+#cd ${SPRING_GENERATOR_DIR}
+#
+## For each of the entries in the library list, perform post-processing steps
+#echo "looping over libraries to perform post-processing"
+#while IFS=, read -r library_name googleapis_location coordinates_version googleapis_commitish monorepo_folder; do
+#  echo "processing library $library_name"
+#  group_id=$(echo $coordinates_version | cut -f1 -d:)
+#  artifact_id=$(echo $coordinates_version | cut -f2 -d:)
+#  postprocess_library $artifact_id $group_id $PROJECT_VERSION $googleapis_location $monorepo_folder $googleapis_commitish $MONOREPO_TAG 2>&1 | tee tmp-output || save_error_info ${SPRING_GENERATOR_DIR} "postprocess_$library_name"
+#done <<< "${LIBRARIES}"
+#
+## Clean up downloaded repo and output file
+#rm tmp-output
+#rm -rf googleapis
+#
+## Format generated code
+#echo "running formatter on generated code"
+#run_formatter ${SPRING_ROOT_DIR}/spring-cloud-previews
+#
