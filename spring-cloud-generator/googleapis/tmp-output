@@ -1,0 +1,149 @@
++ googleapis_commitish=17e6661f8bf43374633adf950454ed8e69bdcee1
++ googleapis_folder=google/cloud/workflows/v1
+++ pwd
++ '[' '!' -d /usr/local/google/home/zhumin/repos/spring-cloud-gcp/spring-cloud-generator/googleapis/google/cloud/workflows/v1 ']'
++ git checkout 17e6661f8bf43374633adf950454ed8e69bdcee1 -- google/cloud/workflows/v1
++ SPRING_RULE_NAME='    \"java_gapic_spring_library\",'
++ perl -0777 -pi -e 's/(load\((.*?)"java_gapic_library",)/$1\n    \"java_gapic_spring_library\",/s' google/cloud/workflows/v1/BUILD.bazel
++ modify_build_file google/cloud/workflows/v1/BUILD.bazel
++ path_to_build_file=google/cloud/workflows/v1/BUILD.bazel
+++ buildozer 'print name' google/cloud/workflows/v1/BUILD.bazel:%java_gapic_library
++ GAPIC_RULE_NAME=workflows_java_gapic
++ SPRING_RULE_NAME=workflows_java_gapic_spring
+++ buildozer 'print rule' google/cloud/workflows/v1/BUILD.bazel:%java_gapic_library
++ GAPIC_RULE_FULL='java_gapic_library(
+    name = "workflows_java_gapic",
+    srcs = [":workflows_proto_with_info"],
+    gapic_yaml = "workflows_gapic.yaml",
+    grpc_service_config = "workflows_grpc_service_config.json",
+    rest_numeric_enums = True,
+    service_yaml = "workflows_v1.yaml",
+    test_deps = [
+        "//google/cloud/location:location_java_grpc",
+        ":workflows_java_grpc",
+    ],
+    transport = "grpc+rest",
+    deps = [
+        ":workflows_java_proto",
+        "//google/api:api_java_proto",
+        "//google/cloud/location:location_java_proto",
+    ],
+)'
++ buildozer 'new java_gapic_spring_library workflows_java_gapic_spring' google/cloud/workflows/v1/BUILD.bazel:__pkg__
+fixed /usr/local/google/home/zhumin/repos/spring-cloud-gcp/spring-cloud-generator/googleapis/google/cloud/workflows/v1/BUILD.bazel
++ attrs_array=("srcs" "grpc_service_config" "gapic_yaml" "service_yaml" "transport")
++ for attribute in "${attrs_array[@]}"
++ echo srcs
+srcs
++ [[ java_gapic_library(
+    name = "workflows_java_gapic",
+    srcs = [":workflows_proto_with_info"],
+    gapic_yaml = "workflows_gapic.yaml",
+    grpc_service_config = "workflows_grpc_service_config.json",
+    rest_numeric_enums = True,
+    service_yaml = "workflows_v1.yaml",
+    test_deps = [
+        "//google/cloud/location:location_java_grpc",
+        ":workflows_java_grpc",
+    ],
+    transport = "grpc+rest",
+    deps = [
+        ":workflows_java_proto",
+        "//google/api:api_java_proto",
+        "//google/cloud/location:location_java_proto",
+    ],
+) = *\s\r\c\s* ]]
++ buildozer 'copy srcs workflows_java_gapic' google/cloud/workflows/v1/BUILD.bazel:workflows_java_gapic_spring
+fixed /usr/local/google/home/zhumin/repos/spring-cloud-gcp/spring-cloud-generator/googleapis/google/cloud/workflows/v1/BUILD.bazel
++ for attribute in "${attrs_array[@]}"
++ echo grpc_service_config
+grpc_service_config
++ [[ java_gapic_library(
+    name = "workflows_java_gapic",
+    srcs = [":workflows_proto_with_info"],
+    gapic_yaml = "workflows_gapic.yaml",
+    grpc_service_config = "workflows_grpc_service_config.json",
+    rest_numeric_enums = True,
+    service_yaml = "workflows_v1.yaml",
+    test_deps = [
+        "//google/cloud/location:location_java_grpc",
+        ":workflows_java_grpc",
+    ],
+    transport = "grpc+rest",
+    deps = [
+        ":workflows_java_proto",
+        "//google/api:api_java_proto",
+        "//google/cloud/location:location_java_proto",
+    ],
+) = *\g\r\p\c\_\s\e\r\v\i\c\e\_\c\o\n\f\i\g* ]]
++ buildozer 'copy grpc_service_config workflows_java_gapic' google/cloud/workflows/v1/BUILD.bazel:workflows_java_gapic_spring
+fixed /usr/local/google/home/zhumin/repos/spring-cloud-gcp/spring-cloud-generator/googleapis/google/cloud/workflows/v1/BUILD.bazel
++ for attribute in "${attrs_array[@]}"
++ echo gapic_yaml
+gapic_yaml
++ [[ java_gapic_library(
+    name = "workflows_java_gapic",
+    srcs = [":workflows_proto_with_info"],
+    gapic_yaml = "workflows_gapic.yaml",
+    grpc_service_config = "workflows_grpc_service_config.json",
+    rest_numeric_enums = True,
+    service_yaml = "workflows_v1.yaml",
+    test_deps = [
+        "//google/cloud/location:location_java_grpc",
+        ":workflows_java_grpc",
+    ],
+    transport = "grpc+rest",
+    deps = [
+        ":workflows_java_proto",
+        "//google/api:api_java_proto",
+        "//google/cloud/location:location_java_proto",
+    ],
+) = *\g\a\p\i\c\_\y\a\m\l* ]]
++ buildozer 'copy gapic_yaml workflows_java_gapic' google/cloud/workflows/v1/BUILD.bazel:workflows_java_gapic_spring
+fixed /usr/local/google/home/zhumin/repos/spring-cloud-gcp/spring-cloud-generator/googleapis/google/cloud/workflows/v1/BUILD.bazel
++ for attribute in "${attrs_array[@]}"
++ echo service_yaml
+service_yaml
++ [[ java_gapic_library(
+    name = "workflows_java_gapic",
+    srcs = [":workflows_proto_with_info"],
+    gapic_yaml = "workflows_gapic.yaml",
+    grpc_service_config = "workflows_grpc_service_config.json",
+    rest_numeric_enums = True,
+    service_yaml = "workflows_v1.yaml",
+    test_deps = [
+        "//google/cloud/location:location_java_grpc",
+        ":workflows_java_grpc",
+    ],
+    transport = "grpc+rest",
+    deps = [
+        ":workflows_java_proto",
+        "//google/api:api_java_proto",
+        "//google/cloud/location:location_java_proto",
+    ],
+) = *\s\e\r\v\i\c\e\_\y\a\m\l* ]]
++ buildozer 'copy service_yaml workflows_java_gapic' google/cloud/workflows/v1/BUILD.bazel:workflows_java_gapic_spring
+fixed /usr/local/google/home/zhumin/repos/spring-cloud-gcp/spring-cloud-generator/googleapis/google/cloud/workflows/v1/BUILD.bazel
++ for attribute in "${attrs_array[@]}"
++ echo transport
+transport
++ [[ java_gapic_library(
+    name = "workflows_java_gapic",
+    srcs = [":workflows_proto_with_info"],
+    gapic_yaml = "workflows_gapic.yaml",
+    grpc_service_config = "workflows_grpc_service_config.json",
+    rest_numeric_enums = True,
+    service_yaml = "workflows_v1.yaml",
+    test_deps = [
+        "//google/cloud/location:location_java_grpc",
+        ":workflows_java_grpc",
+    ],
+    transport = "grpc+rest",
+    deps = [
+        ":workflows_java_proto",
+        "//google/api:api_java_proto",
+        "//google/cloud/location:location_java_proto",
+    ],
+) = *\t\r\a\n\s\p\o\r\t* ]]
++ buildozer 'copy transport workflows_java_gapic' google/cloud/workflows/v1/BUILD.bazel:workflows_java_gapic_spring
+fixed /usr/local/google/home/zhumin/repos/spring-cloud-gcp/spring-cloud-generator/googleapis/google/cloud/workflows/v1/BUILD.bazel

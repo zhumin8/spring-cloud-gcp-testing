@@ -74,6 +74,8 @@ done <<< "${LIBRARIES}"
 # add commit to debug branch in repo. This branch is wiped out each time.
 # This debug branch contains googleapis alterations before invoking bazel_build_all
 cd ${SPRING_GENERATOR_DIR}
+echo "remove googleapis/.git to avoid conflict"
+rm -rf googleapis/.git
 
 debug_branch="debug-spring-rules"
 remote="my-graal-test"
@@ -95,8 +97,7 @@ fi
 echo "creating $debug_branch branch, add commit and push to remote"
 git checkout -b $debug_branch ||  { echo "Error creating or switching to new branch. Exiting." && exit 1; }
 # remove .git so content can be added to commit for debug
-echo "remove googleapis/.git to avoid conflict"
-rm -rf googleapis/.git
+
 git add .
 git commit -m "debug: added all changes to repo before fetching all `*java_gapic_spring` build rules and build them."
 echo "commit added, now push to remote."
